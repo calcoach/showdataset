@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart MySQL</title>
+
+    <style>
+    </style>
+</head>
+<body>
+
+  <form name="formulario1" action="#">
+    <select class="seleccion" name="cosa" onchange="cambia()">
+      <option value="0">Seleccione
+      <option value="1">Juegos
+      <option value="2">Hardware
+      <option value="3">Software
+      <option value="4">Marcas
+    </select>
+  </form>
+    <canvas id="myChart" style="position: relative; height: 40vh; width: 80vw;"></canvas>
+
+    <form name="formulario2" action="#">
+      <select class="seleccion2" name="cosa2" onchange="cambia2()">
+        <option value="0">Seleccione
+        <option value="1">Juegos
+        <option value="2">Hardware
+        <option value="3">Software
+        <option value="4">Marcas
+      </select>
+
+    </form>
+      <canvas id="myChart2" style="position: relative; height: 40vh; width: 80vw;"></canvas>
+
+      <form name="formulario3" action="#">
+        <select class="seleccion3" name="cosa3" onchange="cambia3()">
+          <option value="0">Seleccione
+          <option value="1">Juegos
+          <option value="2">Hardware
+          <option value="3">Software
+          <option value="4">Marcas
+        </select>
+
+      </form>
+        <canvas id="myChart3" style="position: relative; height: 40vh; width: 80vw;"></canvas>
+
+        <form name="formulario4" action="#">
+          <select class="seleccion4" name="cosa4" onchange="cambia4()">
+            <option value="0">Seleccione
+            <option value="1">Juegos
+            <option value="2">Hardware
+            <option value="3">Software
+            <option value="4">Marcas
+          </select>
+
+        </form>
+          <canvas id="myChart4" style="position: relative; height: 40vh; width: 80vw;"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var ctx = document.getElementById('myChart')
+        var myChart = new Chart(ctx, {
+            type:'bar',
+            data:{
+                datasets: [{
+                    label: 'Stock de Productos',
+                    backgroundColor: ['#6bf1ab','#63d69f', '#438c6c', '#509c7f', '#1f794e', '#34444c', '#90CAF9', '#64B5F6', '#42A5F5', '#2196F3', '#0D47A1'],
+                    borderColor: ['black'],
+                    borderWidth:1
+                }]
+            },
+            options:{
+                scales:{
+                    y:{
+                        beginAtZero:true
+                    }
+                }
+          }
+        })
+
+
+       consumir_api();
+
+       function consumir_api(consulta){
+          let url = 'http://localhost:3000/api/articulos/'+consulta
+          fetch(url)
+              .then( response => response.json() )
+              .then( datos => mostrar(datos) )
+              .catch( error => console.log(error) )
+
+
+          console.log();
+        }
+
+
+        const mostrar = (articulos) =>{
+            articulos.forEach(element => {
+                myChart.data['labels'].push(element.descripcion)
+                myChart.data['datasets'][0].data.push(element.stock)
+                myChart.update()
+            });
+            console.log(myChart.data)
+        }
+
+        function cambia(){
+				var consulta;
+				//Se toma el vamor de la "cosa seleccionada"
+				consulta = document.formulario1.cosa[document.formulario1.cosa.selectedIndex].value;
+        consumir_api(consulta)
+      }
+      //                  ///////////////
+              var ctx2 = document.getElementById('myChart2')
+              var myChart2 = new Chart(ctx2, {
+                  type:'bar',
+                  data:{
+                      datasets: [{
+                          label: 'Stock de Productos',
+                          backgroundColor: ['#6bf1ab','#63d69f', '#438c6c', '#509c7f', '#1f794e', '#34444c', '#90CAF9', '#64B5F6', '#42A5F5', '#2196F3', '#0D47A1'],
+                          borderColor: ['black'],
+                          borderWidth:1
+                      }]
+                  },
+                  options:{
+                      scales:{
+                          y:{
+                              beginAtZero:true
+                          }
+                      }
+                }
+              })
+
+
+             consumir_api2();
+
+             function consumir_api2(consulta){
+                let url = 'http://localhost:3000/api/articulos/'+consulta
+                fetch(url)
+                    .then( response => response.json() )
+                    .then( datos => mostrar2(datos) )
+                    .catch( error => console.log(error) )
+
+
+                console.log();
+              }
+
+
+              const mostrar2 = (articulos) =>{
+                  articulos.forEach(element => {
+                      myChart2.data['labels'].push(element.descripcion)
+                      myChart2.data['datasets'][0].data.push(element.stock)
+                      myChart2.update()
+                  });
+                  console.log(myChart2.data)
+              }
+
+              function cambia2(){
+      				var consulta;
+      				//Se toma el vamor de la "cosa seleccionada"
+      				consulta = document.formulario2.cosa2[document.formulario2.cosa2.selectedIndex].value;
+              consumir_api2(consulta)
+            }
+
+      /////////////////////////////////7
+      var ctx3 = document.getElementById('myChart3')
+      var myChart3 = new Chart(ctx3, {
+          type:'bar',
+          data:{
+              datasets: [{
+                  label: 'Stock de Productos',
+                  backgroundColor: ['#6bf1ab','#63d69f', '#438c6c', '#509c7f', '#1f794e', '#34444c', '#90CAF9', '#64B5F6', '#42A5F5', '#2196F3', '#0D47A1'],
+                  borderColor: ['black'],
+                  borderWidth:1
+              }]
+          },
+          options:{
+              scales:{
+                  y:{
+                      beginAtZero:true
+                  }
+              }
+        }
+      })
+
+
+      consumir_api3();
+
+      function consumir_api3(consulta){
+        let url = 'http://localhost:3000/api/articulos/'+consulta
+        fetch(url)
+            .then( response => response.json() )
+            .then( datos => mostrar3(datos) )
+            .catch( error => console.log(error) )
+
+
+        console.log();
+      }
+
+
+      const mostrar3 = (articulos) =>{
+          articulos.forEach(element => {
+              myChart3.data['labels'].push(element.descripcion)
+              myChart3.data['datasets'][0].data.push(element.stock)
+              myChart3.update()
+          });
+          console.log(myChart3.data)
+      }
+
+      function cambia3(){
+      var consulta;
+      //Se toma el vamor de la "cosa seleccionada"
+      consulta = document.formulario3.cosa3[document.formulario3.cosa3.selectedIndex].value;
+      consumir_api3(consulta)
+      }
+      ///////////////////////////////////////////////////////////////77
+
+      var ctx4 = document.getElementById('myChart4')
+      var myChart4 = new Chart(ctx4, {
+          type:'bar',
+          data:{
+              datasets: [{
+                  label: 'Stock de Productos',
+                  backgroundColor: ['#6bf1ab','#63d69f', '#438c6c', '#509c7f', '#1f794e', '#34444c', '#90CAF9', '#64B5F6', '#42A5F5', '#2196F3', '#0D47A1'],
+                  borderColor: ['black'],
+                  borderWidth:1
+              }]
+          },
+          options:{
+              scales:{
+                  y:{
+                      beginAtZero:true
+                  }
+              }
+        }
+      })
+
+
+      consumir_api4();
+
+      function consumir_api4(consulta){
+        let url = 'http://localhost:3000/api/articulos/'+consulta
+        fetch(url)
+            .then( response => response.json() )
+            .then( datos => mostrar4(datos) )
+            .catch( error => console.log(error) )
+
+
+        console.log();
+      }
+
+
+      const mostrar4 = (articulos) =>{
+          articulos.forEach(element => {
+              myChart4.data['labels'].push(element.descripcion)
+              myChart4.data['datasets'][0].data.push(element.stock)
+              myChart4.update()
+          });
+          console.log(myChart4.data)
+      }
+
+      function cambia4(){
+      var consulta;
+      //Se toma el vamor de la "cosa seleccionada"
+      consulta = document.formulario4.cosa4[document.formulario4.cosa4.selectedIndex].value;
+      consumir_api4(consulta)
+      }
+
+    </script>
+</body>
+</html>

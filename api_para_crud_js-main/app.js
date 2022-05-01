@@ -9,8 +9,9 @@ app.use(cors())
 //Establecemos los prámetros de conexión
 const conexion = mysql.createConnection({
     host:'localhost',
+    port:'3306',
     user:'root',
-    password:'',
+    password:'12345',
     database:'articulosdb'
 })
 //Conexión a la database
@@ -34,9 +35,9 @@ app.get('/api/articulos', (req,res)=>{
         }
     })
 })
-//Mostrar un SOLO artículo
+//Mostrar un consulta artículo
 app.get('/api/articulos/:id', (req,res)=>{
-    conexion.query('SELECT * FROM articulos WHERE id = ?', [req.params.id], (error, fila)=>{
+    conexion.query('SELECT * FROM articulos WHERE id > ?', [req.params.id], (error, fila)=>{
         if(error){
             throw error
         }else{
@@ -51,10 +52,10 @@ app.post('/api/articulos', (req,res)=>{
     conexion.query(sql, data, function(err, result){
             if(err){
                throw err
-            }else{              
+            }else{
              /*Esto es lo nuevo que agregamos para el CRUD con Javascript*/
-             Object.assign(data, {id: result.insertId }) //agregamos el ID al objeto data             
-             res.send(data) //enviamos los valores                         
+             Object.assign(data, {id: result.insertId }) //agregamos el ID al objeto data
+             res.send(data) //enviamos los valores
         }
     })
 })
@@ -68,7 +69,7 @@ app.put('/api/articulos/:id', (req, res)=>{
     conexion.query(sql, [descripcion, precio, stock, id], function(error, results){
         if(error){
             throw error
-        }else{              
+        }else{
             res.send(results)
         }
     })
@@ -78,7 +79,7 @@ app.delete('/api/articulos/:id', (req,res)=>{
     conexion.query('DELETE FROM articulos WHERE id = ?', [req.params.id], function(error, filas){
         if(error){
             throw error
-        }else{              
+        }else{
             res.send(filas)
         }
     })
